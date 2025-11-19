@@ -17,7 +17,7 @@
   --color-border: #e0e0e0;
 
   /* ===== FONTS ===== */
-  --font-primary: "futura-100-greek";
+  --font-primary: "futura-100-greek-book";
   --font-title: Archides;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
@@ -182,7 +182,7 @@ h1 {
   font-size: 64px;
   color: var(--color-primary);
   text-align: center;
-  margin-top: 20px;
+  margin-top: 60px;
   
 }
 .explication {
