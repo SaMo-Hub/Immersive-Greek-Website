@@ -27,23 +27,6 @@
   box-sizing: border-box; /* souvent préférable pour un layout propre */
 }
 
-body.chapitre-list {
-  /* layout horizontal: le body devient un container flex scrollable */
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  color: white;
-  font-family: "futura-100-greek-book", sans-serif;
-  background: var(--color-bg);
-  width: 100vw;
-  height: 100vh;
-  padding: 50px;
-}
 /* Frame 82 */
 
 button {
@@ -58,6 +41,12 @@ a {
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
+}
+
+#nav-contour{
+  width: calc(100vw - 100px);
+  z-index: 200;
+  position: fixed;
 }
 .nav-button {
     position: absolute;
@@ -88,11 +77,13 @@ button .item {
   transform: rotate(-45deg);
   /* font-size: 24px; */
 }
+
+
 /* Frame 78 */
 .window {
   position: relative;
   /* chaque fenêtre occupe la largeur visible moins les paddings du body (50px left + right) */
-  width: calc(100vw - 100px);
+  flex: 0 0 calc(100vw - 100px);
   height: calc(100vh - 100px);
   background: rgba(235, 115, 51, 0.01);
   border: 4px solid var(--color-primary);
@@ -102,7 +93,46 @@ button .item {
   justify-items: center;
   align-items: center;
   scroll-snap-align: center;
+    overflow: hidden;   /* 👈 AJOUTE ÇA */
+
 }
+.window-space {
+  overflow: hidden;
+  position: relative;
+  /* chaque fenêtre occupe la largeur visible moins les paddings du body (50px left + right) */
+  width: calc(100vw - 100px);
+  height: calc(100vh - 100px);
+ 
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+
+}
+
+
+body.chapitre-list {
+  /* layout horizontal: le body devient un container flex scrollable */
+  display: flex;
+  gap: 100px;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  color: white;
+  font-family: "futura-100-greek-book", sans-serif;
+  background: var(--color-bg);
+  width: fit-content;
+  height: 100vh;
+  padding: 50px;
+
+  flex: 1;
+  overflow-x: auto;
+}
+
 .chapitre-name{
   position: absolute;
   top: -22px;
@@ -240,13 +270,11 @@ height: 76px;
   display: flex;
   width: 100%;
   height: 100%;
-  flex: 1;
-  /* overflow-x: auto; */
-  overflow-y: hidden;
+
 }
 
 .illustration {
-  
+  flex: 0 0 100%;
   height: 100%;
 
   display: flex;
@@ -258,15 +286,19 @@ height: 76px;
 }
 
 #Gaia-talk {
-  left: 580px;
+  left: 530px;
   position: absolute;
-  bottom: 360px;
+  bottom: 340px;
   z-index: 100;
 }
+.chapitre-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-.illustration-container{
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  font-family: var(--font-title);
+  font-size: 68px;
+  color: var(--color-primary);
+ 
 }
