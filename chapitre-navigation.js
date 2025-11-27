@@ -232,14 +232,10 @@ sections.forEach((chapitre) => {
   console.log(text);
 
   if (!text) return;
-
-  gsap.fromTo(text,
-    { x: 0 },
-    {
-      x: 0,
-      opacity: 1,
-      ease: "none",
-      scrollTrigger: {
+gsap.to(text, {
+  x: () => -3000,
+  ease: "none",
+  scrollTrigger: {
         trigger: "body",                 // même trigger que le scroll horizontal
         start: "top top",
         end: () => "+=" + getScrollAmount(),
@@ -249,8 +245,8 @@ sections.forEach((chapitre) => {
         // IMPORTANT : suivre le mouvement horizontal de .illustration-list
        
       }
-    }
-  );
+});
+
 });
 
 
