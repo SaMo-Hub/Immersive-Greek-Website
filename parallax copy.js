@@ -14,7 +14,7 @@ const getScrollAmount = () => {
   return illustrationList.scrollWidth - window.innerWidth;
 };
 
-const SCROLL_SPEED = 2; // 1 = normal, 2 = 2x plus lent, 3 = lent, etc.
+const SCROLL_SPEED = 5; // 1 = normal, 2 = 2x plus lent, 3 = lent, etc.
 
 const setBodyHeight = () => {
   document.body.style.height = `${(getScrollAmount() * SCROLL_SPEED) + window.innerHeight}px`;
@@ -30,7 +30,7 @@ gsap.to(illustrationList, {
   scrollTrigger: {
     trigger: "body",
     start: "top top",
-end: () => "+=" + (getScrollAmount() * SCROLL_SPEED),
+    end: () => "+=" + getScrollAmount(),
     scrub: 1,
     pin: ".illustration-list",
     anticipatePin: 1,
