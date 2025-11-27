@@ -144,6 +144,12 @@ function animateSortie(oldText, newText) {
 }
 
 // Créer des ScrollTriggers pour chaque chapitre
+
+let isClickScrolling = false; // NOUVEAU FLAG
+
+// ... (reste du code identique)
+
+// Créer des ScrollTriggers pour chaque chapitre
 const chapitrePositions = getChapitrePositions();
 
 allChapitres.forEach((chapitre, index) => {
@@ -157,6 +163,9 @@ allChapitres.forEach((chapitre, index) => {
     start: () => `top top-=${startPosition}`,
     end: () => `top top-=${endPosition}`,
     onEnter: () => {
+      // Ignorer si on est en train de scroller via un clic
+      if (isClickScrolling) return;
+      
       octogones.forEach(oct => oct.classList.remove('selected'));
       if (octogones[index]) {
         octogones[index].classList.add('selected');
@@ -169,6 +178,9 @@ allChapitres.forEach((chapitre, index) => {
       }
     },
     onEnterBack: () => {
+      // Ignorer si on est en train de scroller via un clic
+      if (isClickScrolling) return;
+      
       octogones.forEach(oct => oct.classList.remove('selected'));
       if (octogones[index]) {
         octogones[index].classList.add('selected');
@@ -193,23 +205,14 @@ octogones.forEach((octogone, index) => {
     // Si on clique sur le même chapitre, ne rien faire
     if (index === currentChapitreIndex) return;
 
-    // Set le flag d'animation
+    // Set les flags
     isAnimating = true;
+    isClickScrolling = true; // ACTIVER LE FLAG
 
     // Récupérer les positions actuelles
     const positions = getChapitrePositions();
     const targetPosition = positions[index];
     
-    // Anime le scroll window
-    gsap.to(window, {
-      scrollTo: {
-        y: targetPosition,
-        autoKill: false
-      },
-      duration: 1,
-      ease: "power2.inOut"
-    });
-
     // Retire l'ancien selected
     document.querySelector('.octogone.selected')?.classList.remove('selected');
 
@@ -221,34 +224,59 @@ octogones.forEach((octogone, index) => {
 
     // Met à jour l'index
     currentChapitreIndex = index;
+    
+    // Anime le scroll window
+    gsap.to(window, {
+      scrollTo: {
+        y: targetPosition,
+        autoKill: false
+      },
+      duration: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        // Désactiver le flag quand le scroll est terminé
+        isClickScrolling = false;
+      }
+    });
   });
 });
 const sections = gsap.utils.toArray('.all-chapitre');
-console.log('Sections:', sections);
+sections.forEach((chapitre, index) => {
+  const texts = chapitre.querySelectorAll('.text-parallax');
+  console.log(`Chapitre ${index}:`, texts.length, 'text-parallax trouvés');
 
-sections.forEach((chapitre) => {
+  if (texts.length === 0) return;
 
-  const text = chapitre.querySelector('.text-parallax');
-  console.log(text);
+  const startPosition = chapitrePositions[index];
+  const endPosition = index < sections.length - 1 
+    ? chapitrePositions[index + 1] 
+    : getScrollAmount();
 
-  if (!text) return;
-gsap.to(text, {
-  x: () => -3000,
-  ease: "none",
-  scrollTrigger: {
-        trigger: "body",                 // même trigger que le scroll horizontal
-        start: "top top",
-        end: () => "+=" + getScrollAmount(),
+  texts.forEach((text) => {
+    // Calculer la position absolue du texte dans .illustration-list
+    const illustrationListRect = illustrationList.getBoundingClientRect();
+    const textRect = text.getBoundingClientRect();
+    const textAbsoluteLeft = textRect.left - illustrationListRect.left + illustrationList.scrollLeft;
+    
+    // L'animation commence quand le texte entre dans le viewport (à droite de l'écran)
+    const textStart = textAbsoluteLeft - window.innerWidth;
+    // Continue jusqu'à la fin du chapitre
+    const textEnd = endPosition;
+
+    gsap.to(text, {
+      x: () => -1500,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: () => `top top-=${Math.max(0, textStart)}`,
+        end: () => `top top-=${textEnd}`,
         scrub: 1,
         markers: true,
-
-        // IMPORTANT : suivre le mouvement horizontal de .illustration-list
-       
+        invalidateOnRefresh: true
       }
+    });
+  });
 });
-
-});
-
 
 // Refresh ScrollTrigger au resize
 window.addEventListener('resize', () => {
