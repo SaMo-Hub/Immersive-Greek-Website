@@ -20,6 +20,8 @@
   --font-primary: "futura-100-greek-book";
   --font-title: Archides;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --border-size: 4;
 }
 * {
   margin: 0;
