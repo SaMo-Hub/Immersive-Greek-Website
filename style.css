@@ -1,19 +1,4 @@
-.button {
-   font-family: var(--font-title);
 
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #140100;
-  border: 3px solid var(--color-primary);
-  transform: rotate(45deg);
-  color: white;
-  background: var(--color-bg);
-}
 button .item {
     display: block;
   transform: rotate(-45deg);
@@ -58,4 +43,245 @@ height: 76px;
 }
 .sound.on {
   display: block;
+}/* ===== BOUTONS PRINCIPAUX ===== */
+.button {
+  font-family: var(--font-title);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--color-primary);
+  transform: rotate(45deg);
+  color: white;
+  background: var(--color-bg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #ff590069;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.button:hover {
+  border-color: #ff8f5c;
+  transform: rotate(45deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(235, 115, 51, 0.5);
+}
+
+.button:hover::before {
+  width: 200%;
+  height: 200%;
+}
+
+.button:active {
+  transform: rotate(45deg) scale(1.05);
+}
+
+button .item {
+  display: block;
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-45deg);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.button:hover .item {
+  transform: rotate(-45deg) scale(1.1);
+}
+
+.button:hover .item svg {
+  /* filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)); */
+}
+
+/* ===== BOUTON INTERACTION GAIA ===== */
+.interaction-bouton {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  height: 76px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.interaction-bouton:hover {
+  transform: scale(1.1);
+}
+
+#gaia-interaction {
+  bottom: 345px;
+  left: 645px;
+}
+
+.spin-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+.spin {
+  animation: rotate 3s linear infinite;
+  transform-origin: center;
+  transition: all 0.3s ease;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== BOUTONS SONS ===== */
+.sound.off {
+  display: none;
+}
+
+.sound.on {
+  display: block;
+}
+
+#toggle-btn:hover .sound {
+  animation: soundPulse 0.6s ease;
+}
+
+@keyframes soundPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+.pulse:hover p {
+  animation: soundPulse 0.6s ease;
+}
+
+@keyframes soundPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+
+/* ===== OCTOGONES NAVIGATION ===== */
+.octogone {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.octogone:hover {
+  opacity: 1;
+  transform:  scale(1.1);
+}
+
+.octogone:hover svg {
+    /* box-shadow: 0 0 20px rgba(235, 115, 51, 0.5); */
+
+  filter: drop-shadow(0 0 4px rgba(235, 115, 51, 0.212));
+}
+
+.octogone.selected {
+  opacity: 1;
+  cursor: default;
+}
+
+.octogone.selected:hover {
+  transform:  scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(235, 115, 51, 0.288));
+
+}
+
+
+
+.secondary-button{
+  text-transform: uppercase;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+     transition: all 0.5s ease;
+
+}
+
+.secondary-button p {
+    font-weight: "futura-100-greek";
+/* font-weight: 700; */
+  position: absolute;
+}
+
+.secondary-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #ff590069;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 0;
+}
+
+.secondary-button:hover {
+  transform:  scale(1.1);
+  /* box-shadow: 0 0 20px rgba(235, 115, 51, 0.5); */
+}
+
+/* .secondary-button:hover::before {
+  width: 200%;
+  height: 200%;
+} */
+
+.bg-hover {
+  transition: clip-path 0.4s ease;
+  clip-path: inset(0 100% 0 0); /* caché depuis la droite */
+}
+
+/* Hover → fond glisse depuis la droite */
+.secondary-button:hover .bg-hover {
+  clip-path: inset(0 0 0 0); /* montre tout le fond */
+}
+
+
+.button-primary p {
+    position: absolute;
+    color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: 1.2em;
+    text-transform: uppercase;
+
+}
+
+.button-primary {
+    display: flex;
+   align-items: center;
+   justify-content: center;
+     transition: all 0.5s ease;
+     position: relative;
+         width: 18em;
+
 }

@@ -88,7 +88,7 @@ button .item {
         /* overflow-y: auto; */
 
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   background: rgba(235, 115, 51, 0.01);
   border: 4px solid var(--color-primary);
   border-radius: 30px;
@@ -98,6 +98,10 @@ button .item {
     align-items: center;
 
   /* justify-content: center; */
+  background: #170800;
+border: 4px solid #EB7333;
+box-shadow: 0px 4px 34px 1px rgba(0, 0, 0, 0.53), inset 0px 0px 186px -21px rgba(235, 115, 51, 0.2);
+border-radius: 30px;
 }
 .chapitre-name{
   position: absolute;
@@ -118,60 +122,6 @@ button .item {
   align-items: center;
   gap: 8px;
 }
-.octogone.selected {
-    opacity: 1;
-
-  position: relative;
-  width: fit-content;
- color: var(--color-primary);
- font-family: var(--font-title);
- font-size: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-   height: 80px;
-
-/* position: relative; */
-}
-.octogone.selected p {
-  position: absolute;
-  z-index: 10;
-
-  margin: 0;
-}
-.octogone.selected svg {
-position: relative;
-fill: #140100;
-stroke-width: 4px;
-stroke: var(--color-primary);
-}
-
-.octogone {
-  opacity: 0.5;
-  position: relative;
-  width: fit-content;
- color: var(--color-primary);
- font-family: var(--font-title);
- font-size: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-   height: 40px;
-/* position: relative; */
-}
-.octogone p {
-  position: absolute;
-  z-index: 10;
-
-  margin: 0;
-}
-.octogone svg {
- height: 100%;
-position: relative;
-fill: #140100;
-stroke-width: 6px;
-stroke: var(--color-primary);
-}
 
 .subtitle {
   font-size: 16px;
@@ -182,11 +132,18 @@ stroke: var(--color-primary);
 h1 {
   font-family: var(--font-title);
   font-size: 64px;
-  color: var(--color-primary);
+  width: 500px;
+  color: white;
   text-align: center;
-  margin-top: 60px;
+  margin-top: 200px;
+  font-weight: 100;
+  text-transform: uppercase;
   
 }
+
+
+
+
 .explication {
   font-family: var(--font-primary);
   font-size: 16px;
@@ -194,7 +151,7 @@ h1 {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 150px;
-width: 80%;
+width: 500px;
   line-height: 1.5;
 }
 
@@ -217,5 +174,14 @@ width: 80%;
 .chapitre-list{
   display: flex;
   position: relative;
+}
+
+.grid-langage {
+  text-transform: uppercase;
+  display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-template-rows: repeat(3, 1fr);
+grid-column-gap: 12px;
+grid-row-gap: 12px;
 }
 

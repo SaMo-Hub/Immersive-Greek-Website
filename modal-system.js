@@ -89,14 +89,88 @@ function createModal() {
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
   modal.innerHTML = `
-    <div class="modal-content">
-      <svg class="close-modal" width="24" height="24" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.707031 0.707031L5.27539 5.27539M9.84375 9.84375L5.27539 5.27539M5.27539 5.27539L0.707031 9.84375L9.84375 0.707031" stroke="#EB7333" stroke-width="2"/>
-      </svg>
-      <h4 class="modal-name"></h4>
-      <p class="modal-paragraphe"></p>
-      <button class="modal-button">Tu veux en savoir plus ?</button>
-    </div>
+   <div class="modal">
+   <div class="modal-content">
+              <div class="modal-name">
+               <div class="button-primary">
+                <svg
+                  role="img"
+                  viewBox="0 0 294 50"
+                  preserveAspectRatio="xMinYMin meet"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 1H273L281 9V41L273 49H21L13 40.5V9L21 1Z"
+                    fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="2"
+                  ></path>
+                  <rect
+                    x="2"
+                    y="25"
+                    width="15.5563"
+                    height="15.5563"
+                    transform="rotate(-45 2 25)"
+                    fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="2"
+                  ></rect>
+                  <rect
+                    x="10"
+                    y="25"
+                    width="4.24264"
+                    height="4.24264"
+                    transform="rotate(-45 10 25)"
+                    fill="#fff"
+                  ></rect>
+                  <rect
+                    x="270"
+                    y="25"
+                    width="15.5563"
+                    height="15.5563"
+                    transform="rotate(-45 270 25)"
+                  fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="2"
+                  ></rect>
+                  <rect
+                    x="278"
+                    y="25"
+                    width="4.24264"
+                    height="4.24264"
+                    transform="rotate(-45 278 25)"
+                    fill="#fff"
+                  ></rect>
+                </svg>
+              
+                  <p class="">You selected...</p>
+              
+              </div>
+            </div>
+              <h4 class="modal-h1">QUI C'EST ?</h4>
+              <p class="modal-paragraphe">dddddddddd</p>
+            
+                <button class="secondary-button">
+            <p>
+    
+                Tu veux en savoir plus ?
+            </p>
+            <svg  class="btn-svg" width="288" height="62" viewBox="0 0 288 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="bg-hover" d="M261.263 1L286.688 31L261.263 61H26.7373L1.31055 31L26.7373 1H261.263Z" fill="#57280F" />
+    <path d="M261.263 1L286.688 31L261.263 61H26.7373L1.31055 31L26.7373 1H261.263Z" fill="#" stroke="#EB7333" stroke-width="2"/>
+    </svg>
+    
+          </button>
+            </div>
+             <button class="button close-modal">
+              <div class="item">
+              <svg width="16" height="16" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.707031 0.707031L5.27539 5.27539M9.84375 9.84375L5.27539 5.27539M5.27539 5.27539L0.707031 9.84375L9.84375 0.707031" stroke="#EB7333" stroke-width="2"/>
+</svg>
+</div>
+            </button>
+             </div>
   `;
   document.body.appendChild(modal);
   return modal;
@@ -109,7 +183,10 @@ if (!modalOverlay) {
 }
 
 const modalContent = modalOverlay.querySelector('.modal-content');
-const modalName = modalOverlay.querySelector('.modal-name');
+const modalName = modalOverlay.querySelector('.modal-name p');
+console.log(modalName);
+
+const modalH1 = modalOverlay.querySelector('.modal-h1');
 const modalParagraphe = modalOverlay.querySelector('.modal-paragraphe');
 const closeModalBtn = modalOverlay.querySelector('.close-modal');
 const modalButton = modalOverlay.querySelector('.modal-button');
@@ -132,22 +209,44 @@ function openModal(personnageId) {
   modalOverlay.classList.add('active');
   
   // Petite animation d'entrée
-  gsap.fromTo(modalContent, 
+const tl = gsap.timeline();
+tl.fromTo(
+    modalContent,
     { scale: 0.8, opacity: 0 },
     { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
-  );
+)
+// .fromTo(closeModalBtn, from, to) -> par défaut s'enchaîne après
+.fromTo(
+    closeModalBtn,
+    { scale: 0.3, opacity: 0, rotation: -0 },
+    { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(1.7)",rotation: -45 },
+    "-=0.2" // overlap : démarre 0.15s avant la fin de l'animation précédente
+);
 }
 
 // Fonction pour fermer la modal
 function closeModal() {
-  gsap.to(modalContent, {
-    scale: 0.8,
+  const tl = gsap.timeline();
+tl.to(
+    modalContent, {
+       scale: 0.8,
     opacity: 0,
+    duration: 0.2,
+    
+    }
+).to(
+  closeModalBtn, {
+     scale: 0.8,
+    opacity: 0,
+    rotation: -0,
     duration: 0.2,
     onComplete: () => {
       modalOverlay.classList.remove('active');
     }
-  });
+  }, "-=0.2"
+)
+// .fromTo(closeModalBtn, from, to) -> par défaut s'enchaîne après
+
 }
 
 // Event listeners pour tous les boutons de texte modal
@@ -178,7 +277,7 @@ document.addEventListener('keydown', (e) => {
 
 // Action du bouton "Tu veux en savoir plus ?"
 modalButton.addEventListener('click', () => {
-  const personnageNom = modalName.textContent;
+  const personnageNom = modalH1.textContent;
   // Ouvrir Wikipédia dans un nouvel onglet
   window.open(`https://fr.wikipedia.org/wiki/${encodeURIComponent(personnageNom)}`, '_blank');
     // window.open(`./zeusPage.html`, '_blank');

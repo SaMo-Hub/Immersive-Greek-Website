@@ -47,6 +47,7 @@ body.chapitre-list {
   overflow-y: auto;
   scroll-behavior: smooth;
   
+
 }
 /* Frame 82 */
 
@@ -75,12 +76,13 @@ a {
 
 /* Frame 78 */
 .window {
+box-shadow: inset 0px 0px 186px -21px rgba(235, 115, 51, 0.2);
+
    position: fixed;
   padding: 50px;
   width: 100vw;
   height: 100vh;
   background: rgba(235, 115, 51, 0.01);
-  border-radius: 30px;
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -116,20 +118,7 @@ a {
   align-items: center;
   gap: 8px;
 }
-.octogone.selected {
-    opacity: 1;
-  position: relative;
-  width: fit-content;
- color: var(--color-primary);
- font-family: var(--font-title);
- font-size: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-   height: 80px;
 
-/* position: relative; */
-}
 .octogone.selected p {
   position: absolute;
   z-index: 10;
@@ -144,7 +133,6 @@ stroke: var(--color-primary);
 }
 
 .octogone {
-transition: all 1s cubic-bezier(.34,1.56,.6,1);
 
   opacity: 0.5;
   position: relative;
@@ -156,6 +144,20 @@ transition: all 1s cubic-bezier(.34,1.56,.6,1);
   justify-content: center;
   align-items: center;
    height: 40px;
+/* position: relative; */
+}
+.octogone.selected {
+    opacity: 1;
+  position: relative;
+  width: fit-content;
+ color: var(--color-primary);
+ font-family: var(--font-title);
+ font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   height: 80px;
+
 /* position: relative; */
 }
 .octogone p {
@@ -234,15 +236,15 @@ flex: 0 0 auto;
   z-index: 5;
 }
 .meandre {
-  width: 500vw;
+  /* La largeur sera calculée dynamiquement en JS */
   height: 50px;
   position: absolute;
   bottom: -5px;
   left: 0;
-  /* width: 100%; */
   z-index: 5;
-background-image: url("./public/img/meandres.png");
+  background-image: url("./public/img/meandres.png");
   background-repeat: repeat-x;
+  background-size: auto 50px;
 }
 
 
@@ -275,7 +277,7 @@ display: flex;
 .frame-texte p{
  /* width: 40%; */
  width: 300px;
- 
+ font-size: 20px;
  text-align: center;
 }
 /* .illustration-list .frame {
@@ -291,7 +293,23 @@ display: flex;
   flex-shrink: 0;
 } */
 
-
+body.scroll-blocked::after {
+  content: "Cliquez sur l'icône pour continuer";
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(235, 115, 51, 0.9);
+  color: #140100;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 1000;
+  animation: pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
 
 .frame-space-medium{
   position: relative;
@@ -428,28 +446,66 @@ display: flex;
 
 /* ===== STYLES MODAL ===== */
 
-/* Bouton dans le texte pour ouvrir la modal */
-/* ===== STYLES MODAL ===== */
+ 
 
-/* Bouton dans le texte pour ouvrir la modal */
+/* ===== BOUTONS TEXT-MODAL (dans le texte) ===== */
 .text-modal {
- font-family: "futura-100-greek";
- background-color: var(--color-bg);
-  text-decoration: underline;
-  /* font-weight: 400; */
+  background: none;
+  border: none;
   color: var(--color-primary);
+  font-family: inherit;
+  font-size: inherit;
   cursor: pointer;
-  text-decoration: underline;
-  /* text-decoration-style: wavy; */
-  /* text-decoration-color: var(--color-primary); */
   transition: all 0.3s ease;
-  padding: 2px 6px;
+  padding: 0 4px;
+  position: relative;
+}
+
+.text-modal::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), #ff8f5c);
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .text-modal:hover {
-  /* color: #ff8f5c;
-  text-decoration-color: #ff8f5c; */
+  color: #ff8f5c;
+  text-decoration-color: #ff8f5c;
   transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(235, 115, 51, 0.5);
+}
+
+.text-modal:hover::before {
+  width: 100%;
+}
+
+.text-modal:active {
+  transform: scale(0.95);
+}
+
+/* Animation d'apparition au survol */
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(235, 115, 51, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(235, 115, 51, 0.8);
+  }
+}
+
+.text-modal:hover {
+  animation: textGlow 1.5s ease-in-out infinite;
+}
+.modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
 }
 
 /* Overlay de la modal */
@@ -459,14 +515,15 @@ display: flex;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(20, 1, 0, 0.8);
-  backdrop-filter: blur(5px);
+  background: rgba(20, 1, 0, 0.822);
+  /* backdrop-filter: blur(5px); */
   z-index: 9999;
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
   justify-content: center;
   align-items: center;
+  
 }
 
 .modal-overlay.active {
@@ -477,9 +534,10 @@ display: flex;
 /* Contenu de la modal */
 .modal-content {
   position: relative;
-  background: linear-gradient(135deg, #1a0200 0%, #2d0400 100%);
+  background: var(--color-bg);
+  /* background: linear-gradient(135deg, #1a0200 0%, #2d0400 100%); */
   border: 4px solid var(--color-primary);
-  border-radius: 20px;
+  /* border-radius: 20px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -488,14 +546,14 @@ display: flex;
   max-width: 500px;
   width: 90%;
   max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 
+  /* overflow-y: auto; */
+  /* box-shadow: 
     0 20px 60px rgba(235, 115, 51, 0.3),
-    0 0 40px rgba(235, 115, 51, 0.2);
+    0 0 40px rgba(235, 115, 51, 0.2); */
 }
 
 /* Bouton de fermeture */
-.close-modal {
+/* .close-modal {
   position: absolute;
   top: 40px;
   right: 40px;
@@ -504,16 +562,21 @@ display: flex;
   width: 20px;
   height: 20px;
 }
-
+ */
 
 
 /* Titre de la modal */
 .modal-name {
+position: absolute;
+top: -30px;
+}
+.modal-h1 {
   font-family: var(--font-title);
   font-size: 36px;
-  color: var(--color-primary);
+  /* color: var(--color-primary); */
   margin: 0 0 20px 0;
   text-align: left;
+  font-weight: 100;
 }
 
 /* Texte de la modal */
@@ -527,6 +590,7 @@ display: flex;
 }
 
 /* Bouton "En savoir plus" */
+/* ===== BOUTON MODAL ===== */
 .modal-button {
   display: inline-block;
   background: var(--color-primary);
@@ -540,6 +604,21 @@ display: flex;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(235, 115, 51, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .modal-button:hover {
@@ -548,54 +627,36 @@ display: flex;
   box-shadow: 0 6px 20px rgba(235, 115, 51, 0.5);
 }
 
+.modal-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
 .modal-button:active {
   transform: translateY(0);
   box-shadow: 0 2px 10px rgba(235, 115, 51, 0.3);
 }
 
-/* Scrollbar personnalisée pour la modal */
-/* .modal-content::-webkit-scrollbar {
-  width: 8px;
-}
+/* ===== BOUTON FERMER MODAL ===== */
+.close-modal {
+  cursor: pointer;
+  transition: all 0.3s ease;
+    transform: scale(0);
 
-.modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 10px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background: #ff8f5c;
-} */
-
-/* Animation d'entrée */
-@keyframes modalFadeIn {
-  from {
     opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+
+}
+/* 
+.close-modal:hover {
+  transform: rotate(90deg) scale(1.2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .modal-content {
-    padding: 30px 20px;
-    max-width: 90%;
-  }
-  
-  .modal-name {
-    font-size: 28px;
-  }
-  
-  .modal-paragraphe {
-    font-size: 14px;
-  }
+.close-modal path {
+  stroke: var(--color-primary);
+  transition: stroke 0.3s ease;
 }
+
+.close-modal:hover path {
+  stroke: #ff8f5c;
+  filter: drop-shadow(0 0 5px #ff8f5c);
+} */

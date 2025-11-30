@@ -289,3 +289,41 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   ScrollTrigger.refresh();
 });
+
+// ===== AJUSTER LA TAILLE DU MÉANDRE =====
+// À ajouter au début de chapitre-navigation.js, après les imports GSAP
+
+function updateMeandreWidth() {
+  const meandre = document.querySelector('.meandre');
+  const illustrationList = document.querySelector('.illustration-list');
+  
+  if (meandre && illustrationList) {
+    // Calculer la largeur totale de tous les chapitres
+    const totalWidth = illustrationList.scrollWidth;
+    
+    // Appliquer la largeur au méandre
+    meandre.style.width = `${totalWidth}px`;
+    
+    console.log('Méandre width updated:', totalWidth + 'px');
+  }
+}
+
+// Mettre à jour au chargement
+window.addEventListener('load', () => {
+  updateMeandreWidth();
+  
+  // Attendre un peu pour que tout soit bien chargé
+  setTimeout(updateMeandreWidth, 100);
+  setTimeout(updateMeandreWidth, 500);
+});
+
+// Mettre à jour au resize
+window.addEventListener('resize', () => {
+  updateMeandreWidth();
+});
+
+// Mettre à jour quand ScrollTrigger refresh
+ScrollTrigger.addEventListener('refresh', updateMeandreWidth);
+
+// Appel initial
+updateMeandreWidth();

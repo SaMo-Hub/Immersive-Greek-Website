@@ -1,27 +1,107 @@
 // Configuration du scroll horizontal avec GSAP
 gsap.registerPlugin(ScrollTrigger);
+document.body.classList.add('scroll-blocked');
 
 // Sélectionner le conteneur des illustrations
 const illustrationList = document.querySelector('.illustration-list');
-const sections = gsap.utils.toArray('.illustration-list > *');
-const chapitreFrames = gsap.utils.toArray('.chapitre-frame');
 
-console.log('Sections:', sections);
-console.log('Chapitre frames:', chapitreFrames);
+// Sélectionner uniquement les conteneurs de chapitres
+const allChapitres = gsap.utils.toArray('.all-chapitre');
+
+// ===== NOUVEAU: Système de blocage du scroll =====
+let scrollBlocked = true;
+let maxScrollPosition = 0;
+const gaiaInteraction = document.getElementById('gaia-interaction');
+const gaiaFrame = document.getElementById('gaia-talk');
+
+// Calculer la position maximale autorisée (jusqu'à la frame de Gaïa)
+function calculateMaxScroll() {
+  if (gaiaFrame) {
+    const illustrationListRect = illustrationList.getBoundingClientRect();
+    const gaiaRect = gaiaFrame.getBoundingClientRect();
+    maxScrollPosition = gaiaRect.left - illustrationListRect.left + illustrationList.scrollLeft + gaiaFrame.offsetWidth;
+  }
+}
+
+// Bloquer le scroll au-delà de la position de Gaïa
+function limitScroll() {
+  if (scrollBlocked && window.scrollY > maxScrollPosition) {
+    window.scrollTo(0, maxScrollPosition);
+  }
+}
+
+// Gestionnaire de l'interaction avec Gaïa
+if (gaiaInteraction) {
+  gaiaInteraction.addEventListener('click', () => {
+    // Débloquer le scroll
+    scrollBlocked = false;
+    
+    // Faire disparaître le bouton d'interaction
+    gsap.to(gaiaInteraction, {
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        gaiaInteraction.style.display = 'none';
+      }
+    });
+    
+    // Faire apparaître le texte de Gaïa
+    const gaiaText = gaiaFrame.querySelector('.text-parallax');
+    if (gaiaText) {
+      gaiaText.style.display = 'flex';
+      gsap.fromTo(gaiaText, 
+        { 
+          opacity: 0, 
+          y: 30 
+        },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          ease: "power2.out",
+          delay: 0.3
+        }
+      );
+    }
+  });
+}
+
+// Écouter le scroll pour le bloquer si nécessaire
+window.addEventListener('scroll', limitScroll);
+
+// ===== FIN NOUVEAU =====
 
 // Calculer la largeur totale à scroller
 const getScrollAmount = () => {
   return illustrationList.scrollWidth - window.innerWidth;
 };
 
-const SCROLL_SPEED = 2; // 1 = normal, 2 = 2x plus lent, 3 = lent, etc.
-
+// Définir la hauteur du body en fonction de la largeur à scroller
 const setBodyHeight = () => {
-  document.body.style.height = `${(getScrollAmount() * SCROLL_SPEED) + window.innerHeight}px`;
+  document.body.style.height = `${getScrollAmount() + window.innerHeight}px`;
+  calculateMaxScroll(); // Recalculer la position max à chaque resize
+};
+
+// Calculer la position de chaque chapitre
+const getChapitrePositions = () => {
+  const positions = [];
+  let cumulativeWidth = 0;
+  
+  allChapitres.forEach((chapitre) => {
+    positions.push(cumulativeWidth);
+    cumulativeWidth += chapitre.offsetWidth;
+  });
+  
+  return positions;
 };
 
 // Initialiser la hauteur
 setBodyHeight();
+
+// Forcer le scroll au début
+window.scrollTo(0, 0);
 
 // Créer un wrapper pour le scroll horizontal
 gsap.to(illustrationList, {
@@ -30,8 +110,8 @@ gsap.to(illustrationList, {
   scrollTrigger: {
     trigger: "body",
     start: "top top",
-end: () => "+=" + (getScrollAmount() * SCROLL_SPEED),
-    scrub: 1,
+    end: () => "+=" + getScrollAmount(),
+    scrub: 0.5,
     pin: ".illustration-list",
     anticipatePin: 1,
     invalidateOnRefresh: true,
@@ -47,32 +127,209 @@ gsap.to('.meandre', {
     trigger: "body",
     start: "top top",
     end: () => "+=" + (illustrationList.scrollWidth - window.innerWidth),
-    scrub: 0.5
+    scrub: 0.2
   }
 });
 
-// Animation parallax des textes
-gsap.utils.toArray('.frame-texte').forEach((texte, index) => {
-  gsap.to(texte, {
-    x: () => {
-      // Calculer la position de base de ce texte
-      let basePosition = 0;
-      for (let i = 0; i < sections.length; i++) {
-        if (sections[i] === texte) break;
-        basePosition += sections[i].offsetWidth;
+// Animation des octogones de navigation
+const octogones = document.querySelectorAll('.octogone');
+
+// Configuration pour l'animation du texte du chapitre
+const chapitreName = document.getElementById("chapitre-name");
+const chapitreNames = [
+  "L'enfant de la prophétie",
+  "Le choc des Titans",
+  "Chapitre 3",
+  "Chapitre 4",
+];
+
+let currentChapitreIndex = 0;
+let isAnimating = false;
+
+// Initialisation
+chapitreName.textContent = chapitreNames[0];
+
+// ANIMATION ENTREE
+function animateEntree(newText) {
+  chapitreName.innerHTML = '';
+
+  [...newText].forEach(letter => {
+    const span = document.createElement('span');
+    if (letter === ' ') {
+      letter = '\u00A0';
+    }
+    if (letter === 'f') {
+      span.style.marginRight = '-2px';
+    }
+
+    span.textContent = letter;
+    span.style.display = 'inline-block';
+    span.style.opacity = 0;
+    span.style.transform = 'translateY(50px)';
+    chapitreName.appendChild(span);
+  });
+
+  gsap.to(chapitreName.querySelectorAll('span'), {
+    y: 0,
+    opacity: 1,
+    duration: 0.4,
+    ease: "power2.out",
+    stagger: 0.04,
+    onComplete: () => {
+      isAnimating = false;
+    }
+  });
+}
+
+// ANIMATION SORTIE + ENTRÉE
+function animateSortie(oldText, newText) {
+  chapitreName.innerHTML = '';
+
+  [...oldText].forEach(letter => {
+    const span = document.createElement('span');
+    if (letter === ' ') {
+      letter = '\u00A0';
+    }
+    span.textContent = letter;
+    span.style.display = 'inline-block';
+    span.style.opacity = 1;
+    span.style.transform = 'translateY(0px)';
+    chapitreName.appendChild(span);
+  });
+
+  const tl = gsap.timeline();
+
+  tl.to(chapitreName.querySelectorAll('span'), {
+    y: 50,
+    opacity: 0,
+    duration: 0.3,
+    ease: "power2.in",
+    stagger: 0.03
+  });
+
+  tl.add(() => animateEntree(newText));
+}
+
+let isClickScrolling = false;
+
+// Créer des ScrollTriggers pour chaque chapitre
+const chapitrePositions = getChapitrePositions();
+
+allChapitres.forEach((chapitre, index) => {
+  const startPosition = chapitrePositions[index];
+  const endPosition = index < allChapitres.length - 1 
+    ? chapitrePositions[index + 1] 
+    : getScrollAmount();
+
+  ScrollTrigger.create({
+    trigger: "body",
+    start: () => `top top-=${startPosition}`,
+    end: () => `top top-=${endPosition}`,
+    onEnter: () => {
+      if (isClickScrolling) return;
+      
+      octogones.forEach(oct => oct.classList.remove('selected'));
+      if (octogones[index]) {
+        octogones[index].classList.add('selected');
+        
+        if (index !== currentChapitreIndex && !isAnimating) {
+          isAnimating = true;
+          animateSortie(chapitreNames[currentChapitreIndex], chapitreNames[index]);
+          currentChapitreIndex = index;
+        }
       }
-      // Le texte bouge moins vite (70% de la vitesse normale) = effet parallax
-      return -(basePosition * 0.1);
     },
-    ease: "none",
-    scrollTrigger: {
-      trigger: "body",
-      start: "top top",
-      end: () => "+=" + getScrollAmount(),
-      scrub: 1
+    onEnterBack: () => {
+      if (isClickScrolling) return;
+      
+      octogones.forEach(oct => oct.classList.remove('selected'));
+      if (octogones[index]) {
+        octogones[index].classList.add('selected');
+        
+        if (index !== currentChapitreIndex && !isAnimating) {
+          isAnimating = true;
+          animateSortie(chapitreNames[currentChapitreIndex], chapitreNames[index]);
+          currentChapitreIndex = index;
+        }
+      }
     }
   });
 });
 
+// Navigation par clic sur les octogones
+octogones.forEach((octogone, index) => {
+  octogone.style.cursor = 'pointer';
+  octogone.addEventListener('click', () => {
+    if (isAnimating) return;
+    if (index === currentChapitreIndex) return;
 
+    isAnimating = true;
+    isClickScrolling = true;
 
+    const positions = getChapitrePositions();
+    const targetPosition = positions[index];
+    
+    document.querySelector('.octogone.selected')?.classList.remove('selected');
+    octogone.classList.add('selected');
+
+    animateSortie(chapitreNames[currentChapitreIndex], chapitreNames[index]);
+    currentChapitreIndex = index;
+    
+    gsap.to(window, {
+      scrollTo: {
+        y: targetPosition,
+        autoKill: false
+      },
+      duration: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        isClickScrolling = false;
+      }
+    });
+  });
+});
+
+const sections = gsap.utils.toArray('.all-chapitre');
+sections.forEach((chapitre, index) => {
+  const texts = chapitre.querySelectorAll('.text-parallax');
+
+  if (texts.length === 0) return;
+
+  const startPosition = chapitrePositions[index];
+  const endPosition = index < sections.length - 1 
+    ? chapitrePositions[index + 1] 
+    : getScrollAmount();
+
+  texts.forEach((text) => {
+    const illustrationListRect = illustrationList.getBoundingClientRect();
+    const textRect = text.getBoundingClientRect();
+    const textAbsoluteLeft = textRect.left - illustrationListRect.left + illustrationList.scrollLeft;
+    
+    const textStart = textAbsoluteLeft - window.innerWidth;
+    const textEnd = endPosition;
+
+    gsap.to(text, {
+      x: () => -1500,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: () => `top top-=${Math.max(0, textStart)}`,
+        end: () => `top top-=${textEnd}`,
+        scrub: 1,
+        invalidateOnRefresh: true
+      }
+    });
+  });
+});
+
+// Refresh ScrollTrigger au resize
+window.addEventListener('resize', () => {
+  setBodyHeight();
+  ScrollTrigger.refresh();
+});
+
+// S'assurer que la page commence au début après le chargement
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  ScrollTrigger.refresh();
+});
