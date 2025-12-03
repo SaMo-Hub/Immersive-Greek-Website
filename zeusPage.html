@@ -13,7 +13,8 @@
   <body class="chapitre-list">
     <section class="window">
       <div class="nav-chapitre-wrapper">
-        <div class="bouton">
+        
+        <!-- <div class="bouton">
           <div class="square left"></div>
           <div class="fond-texte">
             <svg
@@ -47,7 +48,63 @@
             </svg>
           </div>
           <div class="square right"></div>
-        </div>
+        </div> -->
+          <div class="button-primary">
+                <svg
+                  role="img"
+                  viewBox="0 0 294 50"
+                  preserveAspectRatio="xMinYMin meet"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 1H273L281 9V41L273 49H21L13 40.5V9L21 1Z"
+                    fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="var(--border-size)"
+                  ></path>
+                  <rect
+                    x="2"
+                    y="25"
+                    width="15.5563"
+                    height="15.5563"
+                    transform="rotate(-45 2 25)"
+                    fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="var(--border-size)"
+                  ></rect>
+                  <rect
+                    x="10"
+                    y="25"
+                    width="4.24264"
+                    height="4.24264"
+                    transform="rotate(-45 10 25)"
+                    fill="#fff"
+                  ></rect>
+                  <rect
+                    x="270"
+                    y="25"
+                    width="15.5563"
+                    height="15.5563"
+                    transform="rotate(-45 270 25)"
+                  fill="var(--color-bg)"
+                    stroke="var(--color-primary)"
+                    stroke-width="var(--border-size)"
+                  ></rect>
+                  <rect
+                    x="278"
+                    y="25"
+                    width="4.24264"
+                    height="4.24264"
+                    transform="rotate(-45 278 25)"
+                    fill="#fff"
+                  ></rect>
+                </svg>
+
+                <p id="chapitre-name" class="">You selected...</p>
+
+              
+              </div>
         <nav class="nav-chapitre">
           <svg
             height="24"
@@ -70,7 +127,17 @@
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
+                  stroke-width="0"
+                  class="oct-bg"
                   d="M86.6631 26.4453V75.5283L44.1562 100.069L1.64941 75.5283V26.4453L44.1562 1.9043L86.6631 26.4453Z"
+                />
+                <!-- Contour -->
+                <path
+                  class="oct-stroke"
+                  d="M86.6631 26.4453V75.5283L44.1562 100.069L1.64941 75.5283V26.4453L44.1562 1.9043L86.6631 26.4453Z"
+                  fill="none"
+                  stroke="#EB7333"
+                  stroke-width="2"
                 />
               </svg>
             </div>
@@ -82,7 +149,17 @@
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
+                  stroke-width="0"
+                  class="oct-bg"
                   d="M86.6631 26.4453V75.5283L44.1562 100.069L1.64941 75.5283V26.4453L44.1562 1.9043L86.6631 26.4453Z"
+                />
+                <!-- Contour -->
+                <path
+                  class="oct-stroke"
+                  d="M86.6631 26.4453V75.5283L44.1562 100.069L1.64941 75.5283V26.4453L44.1562 1.9043L86.6631 26.4453Z"
+                  fill="none"
+                  stroke="#EB7333"
+                  stroke-width="2"
                 />
               </svg>
             </div>
@@ -166,18 +243,13 @@
             la prophétie
           </h1>
         </div>
-       
+
         <div class="frame-space">
           <div class="frame frame-texte right">
             <p>
-              Avant même ma naissance, on raconte que mes grands-parents,
-              <button id="Gaia" class="text-modal">Gaïa</button> et
-              <button id="Ouranos" class="text-modal">Ouranos</button>, ont
-              donné vie aux
-              <button id="Titans" class="text-modal">Titans</button>. Mon père,
-              <button id="Cronos" class="text-modal">Cronos</button>, était le
-              plus jeune et, pour devenir roi, il a renversé son propre père.
-            </p>
+             On m’a raconté que mes grands-parents, Gaïa et Ouranos, avaient créé les Titans.
+<br><br>
+Un jour, il a décidé que son père était de trop et l’a renversé pour prendre sa place. Voilà. Ambiance familiale sympa, hein ?
           </div>
         </div>
 
@@ -248,21 +320,32 @@
               </svg>
             </div>
           </div>
+          <div class="bulle">
+            <p>
+              Un de tes enfants sera plus fort que toi.
+            </p>
+     <svg width="278" height="129" viewBox="0 0 278 129" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="path-1-inside-1_1120_8132" fill="white">
+<path d="M273.492 0C275.701 0 277.492 1.79086 277.492 4V125C277.492 127.209 275.701 129 273.492 129H4C1.79087 129 0 127.209 0 125V4C1.03083e-06 1.79086 1.79086 0 4 0H273.492Z"/>
+</mask>
+<path d="M273.492 0C275.701 0 277.492 1.79086 277.492 4V125C277.492 127.209 275.701 129 273.492 129H4C1.79087 129 0 127.209 0 125V4C1.03083e-06 1.79086 1.79086 0 4 0H273.492Z" fill="#190901"/>
+<path d="M277.492 125L279.492 125V125H277.492ZM4 129L3.99999 131H4V129ZM0 4L-2 4V4H0ZM273.492 0V2C274.597 2 275.492 2.89543 275.492 4H277.492H279.492C279.492 0.686292 276.806 -2 273.492 -2V0ZM277.492 4H275.492V125H277.492H279.492V4H277.492ZM277.492 125L275.492 125C275.492 126.105 274.597 127 273.492 127V129V131C276.806 131 279.492 128.314 279.492 125L277.492 125ZM273.492 129V127H4V129V131H273.492V129ZM4 129L4.00001 127C2.89543 127 2 126.105 2 125H0H-2C-2 128.314 0.686303 131 3.99999 131L4 129ZM0 125H2V4H0H-2V125H0ZM0 4L2 4C2 2.89543 2.89543 2 4 2V0V-2C0.686291 -2 -2 0.686293 -2 4L0 4ZM4 0V2H273.492V0V-2H4V0Z" fill="#EB7333" mask="url(#path-1-inside-1_1120_8132)"/>
+</svg>
+
+
+
+          </div>
           <img src="./cronos.png" alt="" />
           <div class="text-parallax frame frame-texte">
             <p>
-              Mais un jour,
-              <button id="Gaia" class="text-modal">Gaïa</button> parla à
-              <button id="Cronos" class="text-modal">Cronos</button>
+             Mais juste après ça, Gaïa lui a lancé la phrase qui a gâché toutes ses nuits :
             </p>
           </div>
         </div>
 
         <div class="frame frame-texte">
           <p>
-            Terrifié par cette prophétie,
-            <button id="Cronos" class="text-modal">Cronos</button> décida de
-            tout faire pour empêcher son destin
+          Et là, croyez-moi, mon père n’a plus pensé à rien d’autre.  Pas aux bisous, pas aux anniversaires… Juste à sa future défaite.
           </p>
         </div>
 
@@ -270,17 +353,7 @@
           <img src="./public/img/Zeus/Chapitre 1/chronos.png" alt="" />
           <div class="text-parallax frame frame-texte">
             <p>
-              Chaque fois que son épouse
-              <button id="Rhea" class="text-modal">Rhéa</button> donnait
-              naissance à un enfant,
-              <button id="Cronos" class="text-modal">Cronos</button> le
-              dévorait. Un à un, les dieux naissants disparaissaient dans le
-              ventre du Titan :
-              <button id="Hestia" class="text-modal">Hestia</button>,
-              <button id="Demeter" class="text-modal">Déméter</button>,
-              <button id="Hera" class="text-modal">Héra</button>,
-              <button id="Hades" class="text-modal">Hadès</button>, puis
-              <button id="Poseidon" class="text-modal">Poséidon</button>.
+             Mes frères et sœurs naissaient, et mon père les faisait disparaître aussitôt.  Un, deux, trois, quatre, cinq.  Ma mère pleurait, mais se taisait.
             </p>
           </div>
         </div>
@@ -289,9 +362,7 @@
           <img src="./public/img/Zeus/Chapitre 1/Rhéa-avec-zeus.png" alt="" />
           <div class="text-parallax frame frame-texte">
             <p>
-              Ma mère, <button id="Rhea" class="text-modal">Rhéa</button>, était
-              très triste. Mais lorsqu'elle tomba enceinte de moi, elle décida
-              enfin de me protéger.
+            Mais quand je suis arrivé, elle a dit :
             </p>
           </div>
         </div>
@@ -303,13 +374,7 @@
           />
           <div class="text-parallax frame frame-texte">
             <p>
-              Je suis né en secret, dans une grotte de
-              <button id="Crete" class="text-modal">Crète</button>. Elle me
-              confia à la chèvre sacrée,
-              <button id="Amalthee" class="text-modal">Amalthée</button>, et
-              ordonna aux
-              <button id="Curete" class="text-modal">Curètes</button> de taper
-              sur leurs boucliers pour couvrir mes pleurs.
+             Je suis né dans une grotte sombre de Crète. Avec une chèvre sacrée pour nounou, Amalthé
             </p>
           </div>
         </div>
@@ -367,5 +432,7 @@
     <script src="chapitre-navigation.js"></script>
     <script type="module" src="modal-system.js"></script>
     <script src="script.js"></script>
+    <script src="ss.js"></script>
+    <script src="text-animation.js"></script>
   </body>
 </html>

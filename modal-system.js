@@ -104,7 +104,7 @@ function createModal() {
                     d="M21 1H273L281 9V41L273 49H21L13 40.5V9L21 1Z"
                     fill="var(--color-bg)"
                     stroke="var(--color-primary)"
-                    stroke-width="2"
+                    stroke-width="var(--border-size)"
                   ></path>
                   <rect
                     x="2"
@@ -114,7 +114,7 @@ function createModal() {
                     transform="rotate(-45 2 25)"
                     fill="var(--color-bg)"
                     stroke="var(--color-primary)"
-                    stroke-width="2"
+                    stroke-width="var(--border-size)"
                   ></rect>
                   <rect
                     x="10"
@@ -132,7 +132,7 @@ function createModal() {
                     transform="rotate(-45 270 25)"
                   fill="var(--color-bg)"
                     stroke="var(--color-primary)"
-                    stroke-width="2"
+                    stroke-width="var(--border-size)"
                   ></rect>
                   <rect
                     x="278"
@@ -158,7 +158,7 @@ function createModal() {
             </p>
             <svg  class="btn-svg" width="288" height="62" viewBox="0 0 288 62" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="bg-hover" d="M261.263 1L286.688 31L261.263 61H26.7373L1.31055 31L26.7373 1H261.263Z" fill="#57280F" />
-    <path d="M261.263 1L286.688 31L261.263 61H26.7373L1.31055 31L26.7373 1H261.263Z" fill="#" stroke="#EB7333" stroke-width="2"/>
+    <path d="M261.263 1L286.688 31L261.263 61H26.7373L1.31055 31L26.7373 1H261.263Z" fill="#" stroke="#EB7333" stroke-width="var(--border-size)"/>
     </svg>
     
           </button>
@@ -166,7 +166,7 @@ function createModal() {
              <button class="button close-modal">
               <div class="item">
               <svg width="16" height="16" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.707031 0.707031L5.27539 5.27539M9.84375 9.84375L5.27539 5.27539M5.27539 5.27539L0.707031 9.84375L9.84375 0.707031" stroke="#EB7333" stroke-width="2"/>
+<path d="M0.707031 0.707031L5.27539 5.27539M9.84375 9.84375L5.27539 5.27539M5.27539 5.27539L0.707031 9.84375L9.84375 0.707031" stroke="#EB7333" stroke-width="var(--border-size)"/>
 </svg>
 </div>
             </button>
