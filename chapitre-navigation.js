@@ -63,6 +63,16 @@ gsap.to('.meandre', {
     scrub: 0.2
   }
 });
+gsap.to('.fire', {
+  x: () => -illustrationList.scrollWidth * 0.2,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "body",
+    start: "top top",
+    end: () => "+=" + (illustrationList.scrollWidth - window.innerWidth),
+    scrub: 0.2
+  }
+});
 
 // Animation des octogones de navigation
 const octogones = document.querySelectorAll('.octogone');

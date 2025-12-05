@@ -1,8 +1,8 @@
 // ===== SYSTÈME DE BLOCAGE DU SCROLL =====
 
 // Variable pour suivre l'état du déblocage
-let isScrollUnlocked = false;
-let isChapitreNavigation = false; // Flag pour la navigation entre chapitres
+let isScrollUnlocked = true;
+let isChapitreNavigation = true; // Flag pour la navigation entre chapitres
 
 // Fonction pour calculer précisément la position de blocage
 function calculateBlockPosition() {

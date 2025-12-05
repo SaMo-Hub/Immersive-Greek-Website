@@ -1,6 +1,74 @@
 
+@font-face {
+  font-family: archides;
+  /* set name */
+  src: url("./public/font/archides.otf");
+  /* url of the font */
+}
+
+:root {
+  /* ===== COULEURS PRIMAIRES ===== */
+  --color-primary: #eb7333;
+  --color-primary-light: #7fa3ff;
+  --color-primary-dark: #2e5cd6;
+
+  /* ===== COULEURS NEUTRES ===== */
+  --color-bg: #140100;
+  --color-bg-alt: #f5f5f5;
+  --color-text: #1a1a1a;
+  --color-text-light: #555555;
+  --color-border: #e0e0e0;
+
+  /* ===== FONTS ===== */
+  --font-primary: "futura-100-greek-book";
+  --font-title: Archides;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --border-size: 2px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* souvent préférable pour un layout propre */
+}
+
+h1 {
+  font-weight: 100;
+}
+
+button {
+  all: unset; /* réinitialise toutes les propriétés héritables et non héritables */
+  -webkit-appearance: none;
+  appearance: none;
+  
+}
+.nav-button {
+  position: fixed;
+  left: 29px;
+  top: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.button {
+   font-family: var(--font-title);
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #140100;
+  border: 3px solid var(--color-primary);
+  transform: scale(0) rotate(0);
+  color: white;
+  background: var(--color-bg);
+}
 button .item {
-    display: block;
   transform: rotate(-45deg);
   /* font-size: 24px; */
 }

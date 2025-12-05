@@ -51,39 +51,10 @@ a {
   appearance: none;
   cursor: pointer;
 }
-.nav-button {
-    position: absolute;
-  left: -25px;
-  top: 160px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-}
-.button {
-   font-family: var(--font-title);
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #140100;
-  border: 3px solid var(--color-primary);
-  transform: rotate(45deg);
-  color: white;
-  background: var(--color-bg);
-}
-button .item {
-  transform: rotate(-45deg);
-  /* font-size: 24px; */
-}
 /* Frame 78 */
 .window {
   position: relative;
-  /* box-sizing: border-box; */
+  /* box-n: border-box; */
   /* overflow: hidden; */
         /* overflow-y: auto; */
 
